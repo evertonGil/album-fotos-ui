@@ -1,0 +1,23 @@
+<div class="apresentacao">
+  <div class="apresentacao-imagens">
+    <div 
+    class="imagem-absolute imagem-crop" 
+    *ngFor="let imagem of listaImagens" 
+    #imagemDiv
+    [style.width]="imagem.largura"
+    [style.height]="imagem.altura"
+    style.top="{{imagem.position.y + 'px'}}"
+    style.left="{{imagem.position.x + 'px'}}">
+      <app-imagem  [imagemObj]="imagem"></app-imagem>
+    </div>
+  </div>
+</div>
+
+<!-- // Propriedades da div
+    if (this.imagemDiv) {
+      const div: HTMLDivElement = this.imagemDiv.nativeElement;
+      div.style.width = `${this.imagemObj.largura}px`;
+      div.style.height = `${this.imagemObj.altura}px`;
+      div.style.top = `${this.imagemObj.position.y}px`;
+      div.style.left = `${this.imagemObj.position.x}px`;
+    } -->

@@ -1,0 +1,27 @@
+ul{
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+}
+li{
+    display: inline-block;
+    margin: 10px;
+}
+.preview_dragable {
+    width: 200px;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    /* Required to make elements draggable in old WebKit */
+    -khtml-user-drag: element;
+    -webkit-user-drag: element;
+}
+
+.imagens-preview{
+    height: 247px;
+    background:  rgb(174, 175, 140);
+    position: relative;
+    overflow: hidden;
+    overflow-x: auto;
+}

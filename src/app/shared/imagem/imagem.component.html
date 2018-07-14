@@ -1,0 +1,7 @@
+
+  <img *ngIf="imagemObj.path" 
+   [src]="imagemObj.path"
+   #imagem
+   [style.height]="imagemProps?.height"
+   [style.width]="imagemProps?.width" />
+  <div *ngIf="!imagemObj.path" class="imagem-border" #imagemBorder></div>

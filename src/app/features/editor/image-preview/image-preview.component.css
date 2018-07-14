@@ -1,0 +1,14 @@
+.preview{
+    border: 2px solid rgb(200,200,200);
+    display: block;
+}
+li{
+    list-style: none;
+}
+ul{
+    margin: 0px;
+    padding: 0px;
+}
+.tooltip{
+    display: none;
+}
