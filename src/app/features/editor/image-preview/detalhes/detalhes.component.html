@@ -1,0 +1,16 @@
+<ul class="tooltip">
+  <li *ngFor="let prop of propList">
+    <strong>{{prop}}: </strong>
+    <span class="proporcao" *ngIf="prop == 'proporcao'">
+      <ul>
+        <li>
+          {{imagemObj[prop].fracao[0]}}x {{imagemObj[prop].fracao[1]}}px
+        </li>
+        <li>{{imagemObj[prop].decimal}}</li>
+      </ul>
+    </span>
+    <span class="" *ngIf="prop != 'proporcao'">
+      {{imagemObj[prop]}}
+    </span>
+  </li>
+</ul>

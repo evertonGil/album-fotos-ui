@@ -16,6 +16,7 @@ export class ImagemComponent implements OnInit, OnChanges {
   @Input() imagemObj: ImagemModel;
 
   imagemProps: any = {};
+  divProps: any = {};
   constructor() {
 
   }
@@ -36,11 +37,9 @@ export class ImagemComponent implements OnInit, OnChanges {
     this.imagemProps.alt = this.imagemObj.titulo;
 
     // Propriedade de div quando nâo tem path de imagem
-    if (this.imagemBorder) {
-      const imagemBorder: HTMLDivElement = this.imagemBorder.nativeElement;
-      imagemBorder.style.width = `${this.imagemObj.largura}px`;
-      imagemBorder.style.height = `${this.imagemObj.altura}px`;
-    }
+    this.divProps.width =`${this.imagemObj.largura}px`
+    this.divProps.height =`${this.imagemObj.altura}px`
+    
   }
 
 }

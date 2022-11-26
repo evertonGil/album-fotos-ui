@@ -1,7 +1,14 @@
+<!-- Caso tenha path -->
+<img 
+  *ngIf="imagemObj.path" 
+  [src]="imagemObj.path" 
+  #imagem
+/>
 
-  <img *ngIf="imagemObj.path" 
-   [src]="imagemObj.path"
-   #imagem
-   [style.height]="imagemProps?.height"
-   [style.width]="imagemProps?.width" />
-  <div *ngIf="!imagemObj.path" class="imagem-border" #imagemBorder></div>
+<!-- Caso não tenha path -->
+<div 
+  *ngIf="!imagemObj.path" 
+  class="imagem-border" 
+  #imagemBorder
+  [style.height]="divProps?.height" 
+  [style.width]="divProps?.width"></div>

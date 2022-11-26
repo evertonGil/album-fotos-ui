@@ -16,17 +16,32 @@ export class ImagemModel {
      * Largura numero sem px
      */
     largura?: number;
-
+    preview?: {
+        path: string;
+        altura: number;
+        largura: number;
+    };;
+    vWeb?: {
+        path: string;
+        altura: number;
+        largura: number;
+    };
+    vImpressao?: {
+        path: string;
+        altura: number;
+        largura: number;
+    };;
     mdc?: number;
-    id: string;
+    _id: string;
     proporcao?: {
         fracao: number[],
-        decimal: number
+        decimal: number,
+        orientacao: string // P - Paisagem, R - Retrato
     };
     position?: {
         y: number,
         x: number
     };
 
-
+    countUse? = 0;
 }

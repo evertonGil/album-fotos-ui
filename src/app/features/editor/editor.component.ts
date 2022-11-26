@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MdcHelper } from '../../helpers/mdc.helper';
 import { ImagemModel } from '../../shared/imagem/imagem.model';
-import { editorService } from './editor.service';
+import { EditorService } from './editor.service';
+import { PubSub } from '../../shared/pubsub';
 
 @Component({
   selector: 'app-editor',
@@ -10,73 +11,99 @@ import { editorService } from './editor.service';
 })
 export class editorComponent implements OnInit {
 
-  constructor(
-    private readonly editorService: editorService
-  ) { }
+  pubSub: PubSub;
+  urlPublica = 'http://localhost:3000';
 
-  listaImagens: ImagemModel[];
-  objectDragged;
-  mousePosX = 0;
-  mousePosY = 0;
-  elemPosX = 0;
-  elemPosY = 0;
-  elemDragged: HTMLLIElement;
+  worker = new Worker('assets/distribuidor-worker.js');
+
+  constructor(
+    private readonly editorService: EditorService
+  ) {
+    this.pubSub = new PubSub();
+  }
+
+  imagensPreviewApi: ImagemModel[];
+  matrizApi: ImagemModel[];
+  listaImagens: ImagemModel[] = [];
+
+  @ViewChild('imagensPreview') imagensPreview: ElementRef;
 
   ngOnInit() {
-    this.listaImagens = this.editorService.getImagens();
+    this.matrizApi = this.editorService.getMatriz();
 
-    this.listaImagens.forEach(imagem => {
-      imagem.path = "/assets/images/_DSC0045.JPG";
-      imagem.proporcao = {fracao: MdcHelper.reduzirFracao(imagem.largura, imagem.altura), decimal: imagem.largura/imagem.altura}
-    })
+    // trata imagens vindas do servidor para o editor/preview
+    this.editorService.getImagens(1).subscribe(imagens => {
+      if (imagens && imagens.length) {
+        this.imagensPreviewApi = imagens;
+      } else {
+        this.imagensPreviewApi = [];
+      }
+
+      // this.imagensPreviewApi.forEach((imagem, i, arr) => {
+      //   imagem.proporcao = this.formataProporcao(imagem.preview);
+      // });
+    });
+
+
+    this.matrizApi.forEach((slot, i, arr) => {
+      slot.proporcao = this.formataProporcao(slot);
+    });
+
+    this.listaImagens = [].concat(this.matrizApi);
   }
 
-  inicioDeDrag(event){
-    event.stopPropagation();
-    
-    console.log('inicio',event);
-    this.elemDragged = event.path.find(ele => ele.classList.contains('preview_dragable'));
-
-    this.mousePosX = event.clientX;
-    this.mousePosY = event.clientY;
-
-    document.onmousemove = this.moveDrag.bind(this);
-    document.onmouseup = this.closeDragElement;
-
-  }
-  saber(){
-    console.log('bubbled');
-  }
-  moveDrag(e){
-    console.log('mouseMove', e.clientX, e.clientY);
-    this.elemPosX = this.mousePosX - e.clientX;
-    this.elemPosY = this.mousePosY - e.clientY;
-
-    this.elemDragged.style.position = 'fixed';
-    this.elemDragged.style.top = (this.elemDragged.offsetTop - this.elemPosY) + "px";
-    this.elemDragged.style.left = (this.elemDragged.offsetLeft - this.elemPosX) + "px";
-
-  }
-  
-  closeDragElement() {
-    /* stop moving when mouse button is released:*/
-    document.onmouseup = null;
-    document.onmousemove = null;
+  formataProporcao(elemento) {
+    const fracao = MdcHelper.reduzirFracao(elemento.largura, elemento.altura);
+    const decimal = elemento.largura / elemento.altura;
+    const orientacao = decimal > 1 ? 'P' : 'R';
+    return {
+      fracao: fracao,
+      decimal: decimal,
+      orientacao: orientacao
+    };
   }
 
-  fimDeDrag(event){
-    const li = event.target;
-    this.objectDragged = undefined;
-    li.style.opacity = '1';
-  }
+  shuffle() {
+    this.pubSub.publish('SHOWLOADER', true);
 
+    const slotsVazios = this.listaImagens.filter((item, i, arr) => {
+      return !item.path;
+    });
 
+    const slotsParaPreencher = [].concat(slotsVazios);
 
-  dragenter(event){
-    console.log('dragenter', event);
-    event.cancelBubble = true;
-    if(event.target !== this.objectDragged){
-      event.target.classList.add('over');
+    this.worker.onmessage = (resposta) => {
+      this.listaImagens = resposta.data;
+      this.pubSub.publish('SHOWLOADER', false);
     }
+
+    this.worker.onerror = (error) => {
+      console.log('[error]', error);
+      this.pubSub.publish('SHOWLOADER', false);
+    }
+
+    this.imagensPreviewApi.forEach((imagem, i, arr) => {
+      imagem.proporcao = this.formataProporcao(imagem.preview);
+    });
+
+    this.worker.postMessage({
+      imagensPreviewApi: this.imagensPreviewApi,
+      slotsParaPreencher: slotsParaPreencher,
+      urlPublica: this.urlPublica,
+      listaImagens: this.listaImagens
+    })
+
+  }
+
+  SomaUsoImagemAPI(imagem: ImagemModel): any {
+    const imagemApi = this.imagensPreviewApi[this.imagensPreviewApi.indexOf(imagem)];
+    imagemApi.countUse = !imagemApi.countUse ? 0 + 1 : imagemApi.countUse + 1;
+  }
+
+  scrolHorizontal(event) {
+    event.preventDefault();
+
+    const div = this.imagensPreview.nativeElement as HTMLDivElement;
+    div.scrollLeft += event.wheelDelta * -1;
   }
 }

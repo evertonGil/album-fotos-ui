@@ -1,9 +1,14 @@
+<div class="botoes">
+    <button type="button">
+      <i></i>
+      Salvar
+    </button>
+    <button type="button" (click)="shuffle()">
+      <i></i>
+      Distribuir
+    </button>
+  </div>
 <app-apresentacao [listaImagens]="listaImagens"></app-apresentacao>
-<div class="imagens-preview" (mousedown)="saber($event)">
-  <ul>
-    <li class="preview_dragable" *ngFor="let imagem of listaImagens" 
-    (mousedown)="inicioDeDrag($event)">
-      <app-image-preview [imagemObj]="imagem"></app-image-preview>
-    </li>
-  </ul>
+<div class="imagens-preview" #imagensPreview (wheel)="scrolHorizontal($event)">
+  <app-image-preview [listaImagens]="imagensPreviewApi"></app-image-preview>
 </div>

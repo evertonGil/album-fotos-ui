@@ -1,23 +1,26 @@
-<div class="apresentacao">
-  <div class="apresentacao-imagens">
-    <div 
+<div class="apresentacao" #wrapper (wheel)="wheel($event)">
+  <div class="zoom">
+    <button (click)="imprimir()">Imprimir</button>
+    <span>{{xZoom}}</span>
+      <button (click)="zoom(valorZoomPadrao, 'soma')">+</button>
+      <button (click)="recenter()">centralizar</button>
+        <button (click)="zoom(valorZoomPadrao, 'subtracao')">-</button>
+      </div>
+  <div #apresentacaoImagens class="apresentacao-imagens" (mousedown)="mousedown($event)">
+    <div [id]="imagem.id"
     class="imagem-absolute imagem-crop" 
-    *ngFor="let imagem of listaImagens" 
+    *ngFor="let imagem of listaImagens; let i = index" 
     #imagemDiv
-    [style.width]="imagem.largura"
-    [style.height]="imagem.altura"
+    [style.width]="imagem.largura + 'px'"
+    [style.height]="imagem.altura + 'px'"
     style.top="{{imagem.position.y + 'px'}}"
-    style.left="{{imagem.position.x + 'px'}}">
+    style.left="{{imagem.position.x + 'px'}}"
+    (mouseup)="mouseup($event, imagem, i)">
       <app-imagem  [imagemObj]="imagem"></app-imagem>
     </div>
   </div>
 </div>
 
-<!-- // Propriedades da div
-    if (this.imagemDiv) {
-      const div: HTMLDivElement = this.imagemDiv.nativeElement;
-      div.style.width = `${this.imagemObj.largura}px`;
-      div.style.height = `${this.imagemObj.altura}px`;
-      div.style.top = `${this.imagemObj.position.y}px`;
-      div.style.left = `${this.imagemObj.position.x}px`;
-    } -->
+<div #modal class="modal" [class.hidden]="!modalAberto">
+  
+</div>

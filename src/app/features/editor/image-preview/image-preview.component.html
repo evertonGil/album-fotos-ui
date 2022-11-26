@@ -1,21 +1,31 @@
-<div>
-  <app-imagem [imagemObj]="imagemObj" #bloco ></app-imagem>
+<!-- <ul [style.width]="larguraTotal+'px'"> -->
+<ul>
+  <li class="image-uploader">
+    <app-uploader (changeArquivos)="aoEscolherArquivos($event)"></app-uploader>
+  </li>
 
-  <ul class="tooltip">
-    <li *ngFor="let prop of propList">
-      <strong>{{prop}}: </strong>
-      <span class="proporcao" *ngIf="prop == 'proporcao'">
-        <ul>
-          <li>
-            {{imagemObj[prop].fracao[0]}}x
-            {{imagemObj[prop].fracao[1]}}px
-          </li>
-          <li>{{imagemObj[prop].decimal}}</li>
-        </ul>
-      </span>
-      <span class="" *ngIf="prop != 'proporcao'">
-        {{imagemObj[prop]}}
-      </span>
+  <ng-container *ngIf="listaImagens && listaImagens.length">
+
+    <li class="imagem-preview" [class.preview_dragable]="!imagem.uploading" *ngFor="let imagem of listaImagens;let i = index" [style.width]="largutaItem + 'px'"
+      [style.height]="alturaItem + 'px'">
+
+      <ng-container *ngIf="imagem.uploading">
+        <div class="imagem">
+          <mz-progress class="barra-progresso">
+          </mz-progress>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="!imagem.uploading">
+        <button class="btn btn-floating" (click)="deletarImagem(imagem._id, i)">
+          x
+        </button>
+        <div class="imagem ">
+          <img [src]="urlPublica + imagem.preview.path" (mousedown)="inicioDeDrag($event, imagem)" (mouseup)="finalDeDrag($event)" />
+        </div>
+
+        <app-detalhes [imagemObj]="imagem"></app-detalhes>
+      </ng-container>
     </li>
-  </ul>
-</div>
+  </ng-container>
+</ul>

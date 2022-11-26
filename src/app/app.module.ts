@@ -6,10 +6,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { HelpersModule } from './helpers/helpers.module';
 import { editorComponent } from './features/editor/editor.component';
 import { ImagePreviewComponent } from './features/editor/image-preview/image-preview.component';
-import { editorService } from './features/editor/editor.service';
+import { EditorService } from './features/editor/editor.service';
 import { ApresentacaoComponent } from './features/apresentacao/apresentacao.component';
 
 import { ImagemComponent } from './shared/imagem/imagem.component';
+import { DetalhesComponent } from './features/editor/image-preview/detalhes/detalhes.component';
+import { LoaderComponent } from './shared/loader/loader.component';
+import { HttpClientModule } from '../../node_modules/@angular/common/http';
+import { UploaderComponent } from './shared/uploader/uploader.component';
+import { MzProgressModule } from 'ngx-materialize'
 
 @NgModule({
   declarations: [
@@ -17,14 +22,19 @@ import { ImagemComponent } from './shared/imagem/imagem.component';
     editorComponent,
     ImagemComponent,
     ImagePreviewComponent,
-    ApresentacaoComponent
+    ApresentacaoComponent,
+    DetalhesComponent,
+    LoaderComponent,
+    UploaderComponent
   ],
   imports: [
     AppRoutingModule,
     HelpersModule,
-    BrowserModule
+    BrowserModule,
+    MzProgressModule,
+    HttpClientModule
   ],
-  providers: [editorService],
+  providers: [EditorService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

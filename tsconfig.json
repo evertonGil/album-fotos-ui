@@ -17,8 +17,6 @@
       "dom"
     ],
     "paths": {
-      "@features/*" : ["src/app/features/*"],
-      "@helpers/*": ["src/app/helpers/*"]
     }
   }
 }

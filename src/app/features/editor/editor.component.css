@@ -1,27 +1,16 @@
-ul{
-    margin: 0px;
-    padding: 0px;
-    display: flex;
-}
-li{
-    display: inline-block;
-    margin: 10px;
-}
-.preview_dragable {
-    width: 200px;
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
-    /* Required to make elements draggable in old WebKit */
-    -khtml-user-drag: element;
-    -webkit-user-drag: element;
-}
-
 .imagens-preview{
-    height: 247px;
-    background:  rgb(174, 175, 140);
-    position: relative;
+    height: 220px;
+    width: 100%;
+    background: rgb(247, 247, 247);
+    position: absolute;
     overflow: hidden;
     overflow-x: auto;
+    z-index: 999;
+    bottom: 0;
+}
+.botoes{
+    position: absolute;
+    top:20px;
+    right: 360px;
+    z-index: 999;
 }
