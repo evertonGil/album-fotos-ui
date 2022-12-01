@@ -22,7 +22,7 @@ export class editorComponent implements OnInit {
     this.pubSub = new PubSub();
   }
 
-  imagensPreviewApi: ImagemModel[];
+  imagensPreviewApi: ImagemModel[] = [];
   matrizApi: ImagemModel[];
   listaImagens: ImagemModel[] = [];
 
@@ -49,7 +49,7 @@ export class editorComponent implements OnInit {
       slot.proporcao = this.formataProporcao(slot);
     });
 
-    this.listaImagens = [].concat(this.matrizApi);
+    this.listaImagens = ([] as any[]).concat(this.matrizApi);
   }
 
   formataProporcao(elemento) {
@@ -70,7 +70,7 @@ export class editorComponent implements OnInit {
       return !item.path;
     });
 
-    const slotsParaPreencher = [].concat(slotsVazios);
+    const slotsParaPreencher = ([] as any[]).concat(slotsVazios);
 
     this.worker.onmessage = (resposta) => {
       this.listaImagens = resposta.data;

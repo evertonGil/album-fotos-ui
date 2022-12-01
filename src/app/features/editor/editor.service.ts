@@ -1,23 +1,22 @@
 import { Injectable } from '@angular/core';
-import { imagenseditorMock } from './mock-imagens-editor';
 import { posicoesMatrizMock } from '../apresentacao/mock-imagens-apresentacao';
 import { ImagemModel } from '../../shared/imagem/imagem.model';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable()
 export class EditorService {
 
   private readonly url = 'http://localhost:3000/v1/imagens/';
-  objectDragged: ImagemModel;
+  objectDragged: ImagemModel | undefined;
 
   constructor(
     private http: HttpClient
   ) {
   }
 
-  getImagens(id): Observable<ImagemModel[]> {
+  getImagens(id: number): Observable<ImagemModel[]> {
     const _url = `${this.url}${id}`;
     // return imagenseditorMock;
     return this.http.get(_url).pipe(map(data => data as ImagemModel[]));

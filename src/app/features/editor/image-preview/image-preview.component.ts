@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, EventEmitter, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, OnChanges } from '@angular/core';
 import { ImagemModel } from '../../../shared/imagem/imagem.model';
 import { EditorService } from '../editor.service';
 
@@ -77,7 +77,7 @@ export class ImagePreviewComponent implements OnInit, OnChanges {
     this.elemDragged.style.top = this.elemPosY + "px";
   }
 
-  finalDeDrag(event) {
+  finalDeDrag(_) {
     this.elemDragged.style.top = 'auto';
     this.elemDragged.style.left = 'auto';
     this.editorService.objectDragged = undefined;
@@ -86,7 +86,7 @@ export class ImagePreviewComponent implements OnInit, OnChanges {
     document.onmouseup = null;
   }
 
-  deletarImagem(idImagem, index) {
+  deletarImagem(idImagem: string, index: number) {
     console.log('arquivo sendo excluido', idImagem);
     this.editorService.deletarImagemPorId(1, idImagem)
     .subscribe( result => {

@@ -1,11 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MdcHelper } from './mdc.helper';
-
-
-
-const services = [
-]
 
 @NgModule({
   imports: [
@@ -13,6 +7,6 @@ const services = [
   ],
   exports: [],
   declarations: [],
-  providers: [services]
+  providers: []
 })
 export class HelpersModule { }

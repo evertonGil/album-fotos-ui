@@ -1,11 +1,9 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { ImagemModel } from '../../shared/imagem/imagem.model';
 import { EditorService } from '../editor/editor.service';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/fromEvent';
-import * as html2canvas from 'html2canvas';
-import * as domtoimage from 'dom-to-image';
+import html2canvas from 'html2canvas';
 import { PubSub } from '../../shared/pubsub';
+import { fromEvent } from 'rxjs';
 
 
 @Component({
@@ -57,7 +55,7 @@ export class ApresentacaoComponent implements OnInit {
     this.positionTopOriginal = this.htmlDivImagens.offsetTop;
     this.htmlDivImagens.style.transform = `scale(${this.scaleCss}, ${this.scaleCss})`;
 
-    Observable.fromEvent(this.wrapperApresentacao.nativeElement, 'mousemove').subscribe((e: any) => {
+    fromEvent(this.wrapperApresentacao.nativeElement, 'mousemove').subscribe((e: any) => {
       this.mouseX = e.pageX;
       this.mouseY = e.pageY;
     });
@@ -91,7 +89,7 @@ export class ApresentacaoComponent implements OnInit {
       });;
   };
 
-  mouseup(event, item: ImagemModel, i) {
+  mouseup(_, item: ImagemModel, i: number) {
     if (this.editorService.objectDragged) {
       this.listaImagens[i].path = this.editorService.objectDragged.path;
     }
