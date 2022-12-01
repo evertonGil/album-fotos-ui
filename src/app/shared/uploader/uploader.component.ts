@@ -12,7 +12,7 @@ export class UploaderComponent implements OnInit {
 
   constructor() { }
 
-  @ViewChild('uploaderInput') uploaderInput: ElementRef;
+  @ViewChild('uploaderInput', {static: false}) uploaderInput: ElementRef;
 
   ngOnInit() {
   }

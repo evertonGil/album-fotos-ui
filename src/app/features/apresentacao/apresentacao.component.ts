@@ -18,9 +18,9 @@ export class ApresentacaoComponent implements OnInit {
   scaleCss = 0.21;
 
   @Input() listaImagens;
-  @ViewChild('apresentacaoImagens') apresentacaoImagens: ElementRef;
-  @ViewChild('wrapper') wrapperApresentacao: ElementRef;
-  @ViewChild('modal') modal: ElementRef;
+  @ViewChild('apresentacaoImagens', {static: false}) apresentacaoImagens: ElementRef;
+  @ViewChild('wrapper', {static: false}) wrapperApresentacao: ElementRef;
+  @ViewChild('modal', {static: false}) modal: ElementRef;
 
   positionLeftOriginal;
   positionTopOriginal;

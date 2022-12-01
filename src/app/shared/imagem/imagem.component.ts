@@ -8,9 +8,9 @@ import { ImagemModel } from './imagem.model';
 })
 export class ImagemComponent implements OnInit, OnChanges {
 
-  @ViewChild('imagemDiv') imagemDiv: ElementRef;
-  @ViewChild('imagem') imagem: ElementRef;
-  @ViewChild('imagemBorder') imagemBorder: ElementRef;
+  @ViewChild('imagemDiv', {static: false}) imagemDiv: ElementRef;
+  @ViewChild('imagem', {static: false}) imagem: ElementRef;
+  @ViewChild('imagemBorder', {static: false}) imagemBorder: ElementRef;
   imagemExiste = false;
 
   @Input() imagemObj: ImagemModel;
