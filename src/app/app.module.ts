@@ -14,7 +14,7 @@ import { DetalhesComponent } from './features/editor/image-preview/detalhes/deta
 import { LoaderComponent } from './shared/loader/loader.component';
 import { HttpClientModule } from '../../node_modules/@angular/common/http';
 import { UploaderComponent } from './shared/uploader/uploader.component';
-import { MzProgressModule } from 'ngx-materialize'
+// import { MzProgressModule } from 'ngx-materialize'
 
 @NgModule({
   declarations: [
@@ -31,7 +31,7 @@ import { MzProgressModule } from 'ngx-materialize'
     AppRoutingModule,
     HelpersModule,
     BrowserModule,
-    MzProgressModule,
+    // MzProgressModule,
     HttpClientModule
   ],
   providers: [EditorService],

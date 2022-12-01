@@ -12,7 +12,7 @@ export class UploaderComponent implements OnInit {
 
   constructor() { }
 
-  @ViewChild('uploaderInput', {static: false}) uploaderInput: ElementRef;
+  @ViewChild('uploaderInput', {static: false}) uploaderInput: ElementRef<any>;
 
   ngOnInit() {
   }
@@ -23,22 +23,25 @@ export class UploaderComponent implements OnInit {
     uploaderInput.click();
   }
 
-  anexarArquivos(event) {
+  anexarArquivos(event: InputEvent) {
 
-    const arquivos = event.target.files;
+    const arquivos = (event.target as HTMLInputElement).files;
     this.listaArquivos = [];
 
-    for (const arquivo of arquivos) {
-      const leitor = new FileReader();
-      leitor.readAsDataURL(arquivo);
-      leitor.onload = () => {
-
-        const _arquivo = {
-          nome: arquivo.name.split('.').slice(0, -1).join('.'),
-          dataUrl: leitor.result,
-          uploading: true
+    if(arquivos != null){
+      for ( let i = 0; arquivos.length; i++) {
+        const arquivo = arquivos[i];
+        const leitor = new FileReader();
+        leitor.readAsDataURL(arquivo);
+        leitor.onload = () => {
+  
+          const _arquivo = {
+            nome: arquivo.name.split('.').slice(0, -1).join('.'),
+            dataUrl: leitor.result,
+            uploading: true
+          }
+          this.changeArquivos.emit(_arquivo);
         }
-        this.changeArquivos.emit(_arquivo);
       }
     }
   }
