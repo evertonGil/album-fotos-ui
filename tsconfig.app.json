@@ -6,14 +6,12 @@
       "dom-inputevent"
     ]
   },
-  "include": [
-    "src/**/*.ts"
+  "files": [
+    "src/main.ts",
+    "src/polyfills.ts"
   ],
-  "exclude": [
-    "src/test.ts",
-    "src/testing/**/*",
-    "src/**/*.spec.ts",
-    "src/**/*.worker.ts"
+  "include": [
+    "src/**/*.d.ts"
   ],
   "angularCompilerOptions": {
     "disableTypeScriptVersionCheck": true
