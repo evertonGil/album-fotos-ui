@@ -26,7 +26,7 @@ export class editorComponent implements OnInit {
   matrizApi: ImagemModel[];
   listaImagens: ImagemModel[] = [];
 
-  @ViewChild('imagensPreview', {static: false}) imagensPreview: ElementRef;
+  @ViewChild('imagensPreview') imagensPreview: ElementRef;
 
   ngOnInit() {
     this.matrizApi = this.editorService.getMatriz();
